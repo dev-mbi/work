@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GTA VI Countdown</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      background: #0a0a0a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Rajdhani', sans-serif;
+      overflow: hidden;
+    }
+
+    .bg {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 0%, rgba(255,180,0,0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 80%, rgba(255,60,0,0.10) 0%, transparent 60%),
+        #0a0a0a;
+      z-index: 0;
+    }
+
+    .grid {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,180,0,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,180,0,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: 0;
+    }
+
+    .card {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 3rem 3.5rem 2.5rem;
+      border: 0.5px solid rgba(255,180,0,0.2);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(10px);
+      max-width: 600px;
+      width: 92vw;
+      animation: fadeUp 1s cubic-bezier(.16,1,.3,1) both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .top-label {
+      font-size: 11px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(255,180,0,0.6);
+      margin-bottom: 0.4rem;
+    }
+
+    .title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 12vw, 6rem);
+      color: #fff;
+      line-height: 1;
+      letter-spacing: 0.04em;
+    }
+
+    .title span { color: #ffb400; }
+
+    .subtitle {
+      font-size: 12px;
+      letter-spacing: 0.25em;
+      color: rgba(255,255,255,0.3);
+      text-transform: uppercase;
+      margin-top: 0.3rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .countdown-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      width: 100%;
+      margin-bottom: 2rem;
+    }
+
+    .unit {
+      background: rgba(255,255,255,0.04);
+      border: 0.5px solid rgba(255,180,0,0.2);
+      border-radius: 8px;
+      padding: 1.2rem 0.5rem 0.8rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .unit::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,180,0,0.6), transparent);
+    }
+
+    .num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      color: #ffb400;
+      line-height: 1;
+      display: block;
+      text-shadow: 0 0 30px rgba(255,180,0,0.4);
+    }
+
+    .lbl {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      margin-top: 6px;
+      display: block;
+    }
+
+    .release-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,180,0,0.07);
+      border: 0.5px solid rgba(255,180,0,0.25);
+      border-radius: 8px;
+      padding: 0.75rem 1.5rem;
+      width: 100%;
+    }
+
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #ffb400;
+      flex-shrink: 0;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.25; }
+    }
+
+    .rel-text {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.05em;
+    }
+
+    .rel-text strong { color: #ffb400; font-weight: 600; }
+
+    .badges {
+      margin-left: auto;
+      display: flex;
+      gap: 6px;
+    }
+
+    .badge {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.35);
+      border: 0.5px solid rgba(255,255,255,0.15);
+      border-radius: 4px;
+      padding: 3px 8px;
+    }
+
+    .footer {
+      margin-top: 1.5rem;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.15);
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg"></div>
+  <div class="grid"></div>
+
+  <div class="card">
+    <p class="top-label">Counting down to</p>
+    <h1 class="title">GTA <span>VI</span></h1>
+    <p class="subtitle">November 19, 2026 &nbsp;·&nbsp; Vice City</p>
+
+    <div class="countdown-row">
+      <div class="unit">
+        <span class="num" id="d">000</span>
+        <span class="lbl">Days</span>
+      </div>
+      <div class="unit">
+        <span class="num" id="h">00</span>
+        <span class="lbl">Hours</span>
+      </div>
+      <div class="unit">
+        <span class="num" id="m">00</span>
+        <span class="lbl">Mins</span>
+      </div>
+      <div class="unit">
+        <span class="num" id="s">00</span>
+        <span class="lbl">Secs</span>
+      </div>
+    </div>
+
+    <div class="release-bar">
+      <div class="dot"></div>
+      <span class="rel-text">Official release: <strong>Nov 19, 2026</strong> &nbsp;·&nbsp; PS5 &amp; Xbox Series X|S</span>
+      <div class="badges">
+        <span class="badge">PS5</span>
+        <span class="badge">XSX</span>
+      </div>
+    </div>
+
+    <p class="footer">Rockstar Games &nbsp;·&nbsp; 2026</p>
+  </div>
+
+  <script>
+    const target = new Date('2026-11-19T00:00:00');
+
+    function pad(n, len) {
+      return String(n).padStart(len || 2, '0');
+    }
+
+    function tick() {
+      const diff = target - new Date();
+      if (diff <= 0) return;
+      document.getElementById('d').textContent = pad(Math.floor(diff / 86400000), 3);
+      document.getElementById('h').textContent = pad(Math.floor((diff % 86400000) / 3600000));
+      document.getElementById('m').textContent = pad(Math.floor((diff % 3600000) / 60000));
+      document.getElementById('s').textContent = pad(Math.floor((diff % 60000) / 1000));
+    }
+
+    tick();
+    setInterval(tick, 1000);
+  </script>
+
+</body>
+</html>
+
+
